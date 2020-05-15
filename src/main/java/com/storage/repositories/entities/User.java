@@ -5,10 +5,14 @@
  */
 package com.storage.repositories.entities;
 
+import com.storage.repositories.entities.enums.Languages;
+import com.storage.repositories.entities.enums.Units;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,10 +49,12 @@ public class User implements Serializable {
     private String email;
     
     @Column(name = "language")
-    private String language;
+    @Enumerated(EnumType.STRING)
+    private Languages language;
 
     @Column(name = "unit")
-    private String unit;
+    @Enumerated(EnumType.STRING)
+    private Units unit;
     
     @Column(name = "dark_mode")
     private Boolean darkMode;
@@ -133,19 +139,19 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getLanguage() {
+    public Languages getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(Languages language) {
         this.language = language;
     }
 
-    public String getUnit() {
+    public Units getUnit() {
         return unit;
     }
 
-    public void setUnit(String unit) {
+    public void setUnit(Units unit) {
         this.unit = unit;
     }
 

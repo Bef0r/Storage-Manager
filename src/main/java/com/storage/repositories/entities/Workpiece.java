@@ -5,11 +5,15 @@
  */
 package com.storage.repositories.entities;
 
+import com.storage.repositories.entities.enums.Materials;
+import com.storage.repositories.entities.enums.Shapes;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +22,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "workpieces")
@@ -47,10 +50,12 @@ public class Workpiece implements Serializable {
     private Integer internalDiameter;
     
     @Column(name = "material")
-    private String material;
+    @Enumerated(EnumType.STRING)
+    private Materials material;
     
     @Column(name = "shape")
-    private String shape;
+    @Enumerated(EnumType.STRING)
+    private Shapes shape;
     
     @Column(name = "reserved_date")
     private ZonedDateTime  reservedDate;
@@ -130,19 +135,19 @@ public class Workpiece implements Serializable {
         this.internalDiameter = internalDiameter;
     }
 
-    public String getMaterial() {
+    public Materials getMaterial() {
         return material;
     }
 
-    public void setMaterial(String material) {
+    public void setMaterial(Materials material) {
         this.material = material;
     }
 
-    public String getShape() {
+    public Shapes getShape() {
         return shape;
     }
 
-    public void setShape(String shape) {
+    public void setShape(Shapes shape) {
         this.shape = shape;
     }
 
