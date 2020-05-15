@@ -6,8 +6,8 @@
 package com.storage.repositories.entities;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,13 +53,13 @@ public class Workpiece implements Serializable {
     private String shape;
     
     @Column(name = "reserved_date")
-    private Date reservedDate;
+    private ZonedDateTime  reservedDate;
     
     @Column(name = "under_order")
     private Boolean underOrder;
     
     @Column(name = "order_date")
-    private Date orderDate;
+    private ZonedDateTime  orderDate;
     
     @ManyToOne
     @JoinColumn(name = "reserved_user_id")
@@ -146,11 +146,11 @@ public class Workpiece implements Serializable {
         this.shape = shape;
     }
 
-    public Date getReservedDate() {
+    public ZonedDateTime  getReservedDate() {
         return reservedDate;
     }
 
-    public void setReservedDate(Date reservedDate) {
+    public void setReservedDate(ZonedDateTime  reservedDate) {
         this.reservedDate = reservedDate;
     }
 
@@ -162,11 +162,11 @@ public class Workpiece implements Serializable {
         this.underOrder = underOrder;
     }
 
-    public Date getOrderDate() {
+    public ZonedDateTime  getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(ZonedDateTime  orderDate) {
         this.orderDate = orderDate;
     }
 

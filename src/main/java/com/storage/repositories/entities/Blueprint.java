@@ -1,6 +1,7 @@
 package com.storage.repositories.entities;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,10 +25,10 @@ public class Blueprint implements Serializable {
     private String id;
     
     @Column(name = "created_date")
-    private Date createdDate;
+    private ZonedDateTime  createdDate;
     
     @Column(name = "last_updated_date")
-    private Date lastUpdatedDate;
+    private ZonedDateTime  lastUpdatedDate;
     
     @JoinColumn(name = "desinger_id")
     @ManyToOne
@@ -56,19 +57,19 @@ public class Blueprint implements Serializable {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
+    public ZonedDateTime  getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(ZonedDateTime  createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getLastUpdatedDate() {
+    public ZonedDateTime  getLastUpdatedDate() {
         return lastUpdatedDate;
     }
 
-    public void setLastUpdatedDate(Date lastUpdatedDate) {
+    public void setLastUpdatedDate(ZonedDateTime  lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
