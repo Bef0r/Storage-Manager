@@ -2,6 +2,7 @@ package com.storage.repositories.entities;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Random;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -97,4 +98,12 @@ public class Blueprint implements Serializable {
         this.workpiece = workpiece;
     }
     
+        public String generateWorkpieceIdOnlyTest(){
+        Random random = new Random();
+        String generatedString = "BLUEPRINT_";
+        for (int i = 0; i < 10; i++) {
+            generatedString= generatedString + random.nextInt(9);
+        }
+        return generatedString;
+    }
 }
