@@ -28,7 +28,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="USERS_PERMISSIONS_ID_GENERATOR", sequenceName="SEQ_USERS")
+    @SequenceGenerator(name="USERS_ID_GENERATOR", sequenceName="SEQ_USERS")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USERS_ID_GENERATOR")
     @Column(name = "id")
     private Long id;
@@ -59,17 +59,11 @@ public class User implements Serializable {
     @Column(name = "dark_mode")
     private Boolean darkMode;
     
-    @OneToMany(mappedBy = "reservedUser")
-    private Collection<Workpiece> reservedWorkpieces;
-    
     @OneToMany(mappedBy = "orderUser")
     private Collection<Workpiece> orderWorkpieces;
     
-    @OneToMany(mappedBy = "desinger")
-    private Collection<Blueprint> desingnerBlueprints;
-    
-    @OneToMany(mappedBy = "lastUpdater")
-    private Collection<Blueprint> updatedBlueprints;
+    @OneToMany(mappedBy = "reservedUser")
+    private Collection<Workpiece> reservedWorkpieces;
     
     @JoinColumn(name = "role_id")
     @ManyToOne
@@ -170,29 +164,13 @@ public class User implements Serializable {
     public void setReservedWorkpieces(Collection<Workpiece> reservedWorkpieces) {
         this.reservedWorkpieces = reservedWorkpieces;
     }
-
+    
     public Collection<Workpiece> getOrderWorkpieces() {
         return orderWorkpieces;
     }
 
     public void setOrderWorkpieces(Collection<Workpiece> orderWorkpieces) {
         this.orderWorkpieces = orderWorkpieces;
-    }
-
-    public Collection<Blueprint> getDesingnerBlueprints() {
-        return desingnerBlueprints;
-    }
-
-    public void setDesingnerBlueprints(Collection<Blueprint> desingnerBlueprints) {
-        this.desingnerBlueprints = desingnerBlueprints;
-    }
-
-    public Collection<Blueprint> getUpdatedBlueprints() {
-        return updatedBlueprints;
-    }
-
-    public void setUpdatedBlueprints(Collection<Blueprint> updatedBlueprints) {
-        this.updatedBlueprints = updatedBlueprints;
     }
 
     public Role getRole() {
