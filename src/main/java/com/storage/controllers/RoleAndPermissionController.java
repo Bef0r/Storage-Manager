@@ -5,7 +5,7 @@
  */
 package com.storage.controllers;
 
-import com.storage.api.response.RoleAndPermission.RolesResponse;
+import com.storage.api.response.RoleAndPermission.RolesWithIdsResponse;
 import com.storage.managers.interfaces.RolePermissionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class RoleAndPermissionController {
 
     
     @GetMapping(path ="/")
-    public RolesResponse getAllRolesWithIds(){
+    public RolesWithIdsResponse getAllRolesWithIds(){
         return rolePermissionManager.getAllRolesWithIds();
     }
 }

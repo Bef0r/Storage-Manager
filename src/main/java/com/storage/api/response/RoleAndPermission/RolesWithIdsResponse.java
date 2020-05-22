@@ -8,7 +8,7 @@ package com.storage.api.response.RoleAndPermission;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RolesResponse {
+public class RolesWithIdsResponse {
     private Map<Long,String> Roles = new HashMap<>();
 
     public Map<Long, String> getRoles() {

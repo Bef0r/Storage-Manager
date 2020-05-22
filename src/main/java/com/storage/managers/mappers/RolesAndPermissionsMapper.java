@@ -5,7 +5,7 @@
  */
 package com.storage.managers.mappers;
 
-import com.storage.api.response.RoleAndPermission.RolesResponse;
+import com.storage.api.response.RoleAndPermission.RolesWithIdsResponse;
 import com.storage.repositories.entities.Role;
 import java.util.HashMap;
 import java.util.List;
@@ -14,8 +14,8 @@ import java.util.Map;
 
 public class RolesAndPermissionsMapper {
     
-    public RolesResponse getAllRolesWithIds(List<Role> roles){
-        RolesResponse mappedRolesWithIds = new RolesResponse();
+    public RolesWithIdsResponse getAllRolesWithIds(List<Role> roles){
+        RolesWithIdsResponse mappedRolesWithIds = new RolesWithIdsResponse();
         
         Map<Long,String> RolesWithIds = new HashMap<>();
         roles.forEach(role->{

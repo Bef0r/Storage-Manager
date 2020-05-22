@@ -5,7 +5,7 @@
  */
 package com.storage.managers;
 
-import com.storage.api.response.RoleAndPermission.RolesResponse;
+import com.storage.api.response.RoleAndPermission.RolesWithIdsResponse;
 import com.storage.managers.interfaces.RolePermissionManager;
 import com.storage.managers.mappers.RolesAndPermissionsMapper;
 import com.storage.repositories.RoleRepository;
@@ -26,10 +26,10 @@ public class RolePermissionManagerImp implements RolePermissionManager{
     
     
     @Override
-    public RolesResponse getAllRolesWithIds() {
+    public RolesWithIdsResponse getAllRolesWithIds() {
         RolesAndPermissionsMapper mapper = new RolesAndPermissionsMapper();
         List<Role> roles = (List<Role>) roleRepository.findAll();
-        RolesResponse response = mapper.getAllRolesWithIds(roles);
+        RolesWithIdsResponse response = mapper.getAllRolesWithIds(roles);
         return response;
     }
     
