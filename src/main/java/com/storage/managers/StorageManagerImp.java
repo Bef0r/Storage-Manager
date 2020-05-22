@@ -6,12 +6,10 @@
 package com.storage.managers;
 
 import com.storage.managers.interfaces.StoreManager;
+import org.springframework.stereotype.Component;
 
 
-/**
- *
- * @author Dell
- */
+@Component
 public class StorageManagerImp implements StoreManager{
 
 }

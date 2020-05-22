@@ -6,11 +6,9 @@
 package com.storage.managers;
 
 import com.storage.managers.interfaces.PermissionManager;
+import org.springframework.stereotype.Component;
 
-/**
- *
- * @author Dell
- */
+@Component
 public class PermissionManagerImp implements PermissionManager{
     
 }

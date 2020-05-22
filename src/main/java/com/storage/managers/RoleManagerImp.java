@@ -6,11 +6,9 @@
 package com.storage.managers;
 
 import com.storage.managers.interfaces.RoleManager;
+import org.springframework.stereotype.Component;
 
-/**
- *
- * @author Dell
- */
+@Component
 public class RoleManagerImp implements RoleManager{
     
 }

@@ -6,11 +6,9 @@
 package com.storage.managers;
 
 import com.storage.managers.interfaces.LocationManager;
+import org.springframework.stereotype.Component;
 
-/**
- *
- * @author Dell
- */
+@Component
 public class LocationManagerImp implements LocationManager{
     
 }
