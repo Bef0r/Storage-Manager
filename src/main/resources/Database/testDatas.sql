@@ -22,6 +22,7 @@ INSERT INTO storage.roles(id, role_name) VALUES (1, 'ADMIN');
 INSERT INTO storage.roles(id, role_name) VALUES (2, 'DESIGNER');
 INSERT INTO storage.roles(id, role_name) VALUES (3, 'STOREKEEPER');
 
+INSERT INTO storage.permissions(id, permission_name) VALUES (23, 'READ_WORKPIECE');
 INSERT INTO storage.permissions(id, permission_name) VALUES (1, 'CREATE_WORKPIECE');
 INSERT INTO storage.permissions(id, permission_name) VALUES (2, 'UPDATE_WORKPIECE');
 INSERT INTO storage.permissions(id, permission_name) VALUES (3, 'DELETE_WORKPIECE');
@@ -30,22 +31,27 @@ INSERT INTO storage.permissions(id, permission_name) VALUES (14, 'RESERVED_WORKP
 INSERT INTO storage.permissions(id, permission_name) VALUES (18, 'SUBTRACTION_WORKPIECE');
 INSERT INTO storage.permissions(id, permission_name) VALUES (19, 'TAKEOVER_WORKPIECE');
 
+INSERT INTO storage.permissions(id, permission_name) VALUES (24, 'READ_BLUEPRINT');
 INSERT INTO storage.permissions(id, permission_name) VALUES (4, 'CREATE_BLUEPRINT');
 INSERT INTO storage.permissions(id, permission_name) VALUES (5, 'DELETE_BLUEPRINT');
 INSERT INTO storage.permissions(id, permission_name) VALUES (6, 'UPDATE_BLUEPRINT');
 
+INSERT INTO storage.permissions(id, permission_name) VALUES (25, 'READ_USER');
 INSERT INTO storage.permissions(id, permission_name) VALUES (7, 'CREATE_USER');
 INSERT INTO storage.permissions(id, permission_name) VALUES (8, 'DELETE_USER');
 INSERT INTO storage.permissions(id, permission_name) VALUES (9, 'UPDATE_USER');
 
+INSERT INTO storage.permissions(id, permission_name) VALUES (26, 'READ_ROLE');
 INSERT INTO storage.permissions(id, permission_name) VALUES (10, 'CREATE_ROLE');
 INSERT INTO storage.permissions(id, permission_name) VALUES (11, 'UPDATE_ROLE');
 INSERT INTO storage.permissions(id, permission_name) VALUES (12, 'DELETE_ROLE');
 
+INSERT INTO storage.permissions(id, permission_name) VALUES (27, 'READ_LOCATION');
 INSERT INTO storage.permissions(id, permission_name) VALUES (15, 'CREATE_LOCATION');
 INSERT INTO storage.permissions(id, permission_name) VALUES (16, 'UPDATE_LOCATION');
 INSERT INTO storage.permissions(id, permission_name) VALUES (17, 'DELETE_LOCATION');
 
+INSERT INTO storage.permissions(id, permission_name) VALUES (28, 'READ_STORE');
 INSERT INTO storage.permissions(id, permission_name) VALUES (20, 'CREATE_STORE');
 INSERT INTO storage.permissions(id, permission_name) VALUES (21, 'UPDATE_STORE');
 INSERT INTO storage.permissions(id, permission_name) VALUES (22, 'DELETE_STORE');
