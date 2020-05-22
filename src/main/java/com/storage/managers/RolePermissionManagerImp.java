@@ -27,7 +27,7 @@ public class RolePermissionManagerImp implements RolePermissionManager{
     public RolesResponse getAllRolesWithIds() {
         RolesAndPermissionsMapper mapper = new RolesAndPermissionsMapper();
         List<Role> roles = (List<Role>) roleRepository.findAll();
-        RolesResponse response = mapper.getAlRolesWithIds(roles);
+        RolesResponse response = mapper.getAllRolesWithIds(roles);
         return response;
     }
     
