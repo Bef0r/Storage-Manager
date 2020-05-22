@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package managers;
-
-import managers.interfaces.RoleManager;
+package com.storage.managers.interfaces;
 
 /**
  *
  * @author Dell
  */
-public class RoleManagerImp implements RoleManager{
+public interface ShelfManager {
     
 }

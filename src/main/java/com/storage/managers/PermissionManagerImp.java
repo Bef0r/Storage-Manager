@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package managers;
+package com.storage.managers;
 
-import managers.interfaces.RolePermissionManager;
+import com.storage.managers.interfaces.PermissionManager;
 
 /**
  *
  * @author Dell
  */
-public class RolePermissionManagerImp implements RolePermissionManager{
+public class PermissionManagerImp implements PermissionManager{
     
 }

@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package managers;
-
-import managers.interfaces.StoreManager;
-
+package com.storage.managers.interfaces;
 
 /**
  *
  * @author Dell
  */
-public class StorageManagerImp implements StoreManager{
-
+public interface LocationManager {
+    
 }

@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package managers;
+package com.storage.managers;
 
-import managers.interfaces.LocationManager;
+import com.storage.managers.interfaces.RoleManager;
 
 /**
  *
  * @author Dell
  */
-public class LocationManagerImp implements LocationManager{
+public class RoleManagerImp implements RoleManager{
     
 }

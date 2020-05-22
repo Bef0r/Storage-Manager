@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package managers;
-
-import managers.interfaces.BlueprintManager;
+package com.storage.managers.interfaces;
 
 /**
  *
  * @author Dell
  */
-public class BlueprintManagerImp implements BlueprintManager{
+public interface UserManager {
     
 }

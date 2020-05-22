@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package managers;
-
-import managers.interfaces.LineManager;
+package com.storage.managers.interfaces;
 
 /**
  *
  * @author Dell
  */
-public class LineManagerImp implements LineManager{
+public interface FloorManager {
     
 }
