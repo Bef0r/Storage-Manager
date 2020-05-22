@@ -5,12 +5,15 @@
  */
 package com.storage.managers;
 
-import com.storage.api.response.RoleAndPermission.RolesWithIdsResponse;
+import com.storage.api.response.RoleAndPermission.RolesAndpermissionsWithIdsResponse;
 import com.storage.managers.interfaces.RolePermissionManager;
 import com.storage.managers.mappers.RolesAndPermissionsMapper;
+import com.storage.repositories.PermissionRepository;
 import com.storage.repositories.RoleRepository;
+import com.storage.repositories.entities.Permission;
 import com.storage.repositories.entities.Role;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,19 +21,28 @@ import org.springframework.stereotype.Component;
 public class RolePermissionManagerImp implements RolePermissionManager{
 
     RoleRepository roleRepository;
-
+    PermissionRepository permissionRepository;
+    
     @Autowired
-    public RolePermissionManagerImp(RoleRepository roleRepository) {
+        public RolePermissionManagerImp(RoleRepository roleRepository, PermissionRepository permissionRepository) {
         this.roleRepository = roleRepository;
+        this.permissionRepository = permissionRepository;
     }
     
     
     @Override
-    public RolesWithIdsResponse getAllRolesWithIds() {
-        RolesAndPermissionsMapper mapper = new RolesAndPermissionsMapper();
+    public RolesAndpermissionsWithIdsResponse getAllRolesAndPermissionsWithIds() {
         List<Role> roles = (List<Role>) roleRepository.findAll();
-        RolesWithIdsResponse response = mapper.getAllRolesWithIds(roles);
+        List<Permission> permissions = (List<Permission>) permissionRepository.findAll();
+        RolesAndpermissionsWithIdsResponse response = mappedGetAllRolesAndPermissionsWithIdsResponse(roles,permissions);
         return response;
+    }
+    
+    private RolesAndpermissionsWithIdsResponse mappedGetAllRolesAndPermissionsWithIdsResponse(List<Role> roles, List<Permission> permissions){
+        RolesAndPermissionsMapper mapper = new RolesAndPermissionsMapper();
+        Map<Long,String> mappedRoles = mapper.mappedRolesWithId(roles);
+        Map<Long,String> mappedPermissions = mapper.mappedPermissionsWithId(permissions);
+        return mapper.mappedRolesAndPermissionToResponse(mappedRoles, mappedPermissions);
     }
     
 }
