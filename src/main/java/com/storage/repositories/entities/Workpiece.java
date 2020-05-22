@@ -29,7 +29,7 @@ public class Workpiece implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="WORKPIECES_PERMISSIONS_ID_GENERATOR", sequenceName="SEQ_WORKPIECES")
+    @SequenceGenerator(name="WORKPIECES_ID_GENERATOR", sequenceName="SEQ_WORKPIECES")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="WORKPIECES_ID_GENERATOR")
     @Column(name = "id")
     private Long id;
@@ -206,5 +206,5 @@ public class Workpiece implements Serializable {
     public void setLocations(Collection<Location> locations) {
         this.locations = locations;
     }
-    
+       
 }

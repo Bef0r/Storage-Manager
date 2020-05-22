@@ -22,7 +22,7 @@ public class Store implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="STORES_PERMISSIONS_ID_GENERATOR", sequenceName="SEQ_STORES")
+    @SequenceGenerator(name="STORES_ID_GENERATOR", sequenceName="SEQ_STORES")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="STORES_ID_GENERATOR")
     @Column(name = "id")
     private Long id;

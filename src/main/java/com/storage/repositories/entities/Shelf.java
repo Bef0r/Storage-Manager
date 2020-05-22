@@ -22,7 +22,7 @@ public class Shelf implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="SHELFS_PERMISSIONS_ID_GENERATOR", sequenceName="SEQ_SHELFS")
+    @SequenceGenerator(name="SHELFS_ID_GENERATOR", sequenceName="SEQ_SHELFS")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHELFS_ID_GENERATOR")
     @Column(name = "id")
     private Long id;
