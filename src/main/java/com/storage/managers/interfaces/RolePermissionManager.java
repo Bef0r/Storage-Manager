@@ -5,9 +5,9 @@
  */
 package com.storage.managers.interfaces;
 
-import com.storage.api.response.RoleAndPermission.RolesWithIdsResponse;
+import com.storage.api.response.RoleAndPermission.RolesAndpermissionsWithIdsResponse;
 
 
 public interface RolePermissionManager {
-    public RolesWithIdsResponse getAllRolesWithIds();
+    public RolesAndpermissionsWithIdsResponse getAllRolesAndPermissionsWithIds();
 }
