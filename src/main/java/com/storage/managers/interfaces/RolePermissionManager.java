@@ -5,10 +5,9 @@
  */
 package com.storage.managers.interfaces;
 
-/**
- *
- * @author Dell
- */
+import com.storage.api.response.RoleAndPermission.RolesResponse;
+
+
 public interface RolePermissionManager {
-    
+    public RolesResponse getAllRolesWithIds();
 }
