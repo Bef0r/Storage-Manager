@@ -47,5 +47,15 @@ public class RolePermissionManagerImp implements RolePermissionManager{
         Map<Long, String> mappedPermissions = RolesAndPermissionsMapper.mappedPermissionsWithId(permissions);
         return RolesAndPermissionsMapper.mappedRolesAndPermissionToResponse(mappedRoles, mappedPermissions);
     }
-
+    
+    @Override
+    public RolesPermissionsResponse getRolePermissions(long roleId) {
+        Optional<Role> role = roleRepository.findById(roleId);
+        if (role.isEmpty()) {
+            return null; // http status code
+        } else {
+            Map<Long, String> permissions = CollectionToMap.convertCollectionToMap(role.get().getRolePermissions());
+            return RolesAndPermissionsMapper.getRolePermissionIdResponse(roleId, permissions);
+        }
+    }
 }
