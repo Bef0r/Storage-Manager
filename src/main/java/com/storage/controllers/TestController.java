@@ -48,7 +48,6 @@ public class TestController {
     	Optional<Blueprint> b = blueprintRepository.findById("1");
     	Location e = locationRepository.findById(1);
     	User u = userRepository.findById(1);
-        Role r = roleRepository.findById(1);
         Optional<Permission> p = permissionRepository.findById(1);
         Workpiece w = workpieceRepository.findById(1);
     	Blueprint b1 = new Blueprint();
