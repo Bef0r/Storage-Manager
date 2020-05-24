@@ -6,7 +6,7 @@
 package com.storage.repositories.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,7 +37,7 @@ public class Store implements Serializable {
     private String mobile;
     
     @OneToMany(mappedBy = "store")
-    private Collection<Location> locations;
+    private List<Location> locations;
 
     public Store() {
     }
@@ -83,11 +83,11 @@ public class Store implements Serializable {
         this.mobile = mobile;
     }
 
-    public Collection<Location> getLocations() {
+    public List<Location> getLocations() {
         return locations;
     }
 
-    public void setLocations(Collection<Location> locations) {
+    public void setLocations(List<Location> locations) {
         this.locations = locations;
     }
     

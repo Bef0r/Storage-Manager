@@ -6,7 +6,7 @@
 package com.storage.repositories.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,7 +31,7 @@ public class Permission implements Serializable {
     private String permissionName;
     
     @OneToMany(mappedBy = "permission")
-    private Collection<RolePermission> rolePermissions;
+    private List<RolePermission> rolePermissions;
 
     public Permission() {
     }
@@ -61,11 +61,11 @@ public class Permission implements Serializable {
         this.permissionName = permissionName;
     }
 
-    public Collection<RolePermission> getRolePermissions() {
+    public List<RolePermission> getRolePermissions() {
         return rolePermissions;
     }
 
-    public void setRolePermissions(Collection<RolePermission> rolePermissions) {
+    public void setRolePermissions(List<RolePermission> rolePermissions) {
         this.rolePermissions = rolePermissions;
     }
     

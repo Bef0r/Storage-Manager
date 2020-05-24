@@ -8,7 +8,7 @@ package com.storage.repositories.entities;
 import com.storage.repositories.entities.enums.Languages;
 import com.storage.repositories.entities.enums.Units;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -60,10 +60,10 @@ public class User implements Serializable {
     private Boolean darkMode;
     
     @OneToMany(mappedBy = "orderUser")
-    private Collection<Workpiece> orderWorkpieces;
+    private List<Workpiece> orderWorkpieces;
     
     @OneToMany(mappedBy = "reservedUser")
-    private Collection<Workpiece> reservedWorkpieces;
+    private List<Workpiece> reservedWorkpieces;
     
     @JoinColumn(name = "role_id")
     @ManyToOne
@@ -157,19 +157,19 @@ public class User implements Serializable {
         this.darkMode = darkMode;
     }
 
-    public Collection<Workpiece> getReservedWorkpieces() {
+    public List<Workpiece> getReservedWorkpieces() {
         return reservedWorkpieces;
     }
 
-    public void setReservedWorkpieces(Collection<Workpiece> reservedWorkpieces) {
+    public void setReservedWorkpieces(List<Workpiece> reservedWorkpieces) {
         this.reservedWorkpieces = reservedWorkpieces;
     }
     
-    public Collection<Workpiece> getOrderWorkpieces() {
+    public List<Workpiece> getOrderWorkpieces() {
         return orderWorkpieces;
     }
 
-    public void setOrderWorkpieces(Collection<Workpiece> orderWorkpieces) {
+    public void setOrderWorkpieces(List<Workpiece> orderWorkpieces) {
         this.orderWorkpieces = orderWorkpieces;
     }
 
