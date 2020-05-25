@@ -58,9 +58,9 @@ public class RolesAndPermissionsMapper {
         return requestRole;
     }
     
-    public static  List<RolePermission> extractRolePermissionsIntheRequest(Role newRole, NewRoleRequest newRoleRequest){
+    public static  List<RolePermission> extractRolePermissionsIntheRequest(Role newRole, List<Long> newRolePermissionIds){
         List<RolePermission> newRolePermissions = new LinkedList<>(); 
-        newRoleRequest.getPermissionIds().stream().forEach(permissionId->{
+        newRolePermissionIds.stream().forEach(permissionId->{
             RolePermission newRolePermission = new RolePermission();
             newRolePermission.setRoleId(newRole.getId());
             newRolePermission.setPermissionId(permissionId);
