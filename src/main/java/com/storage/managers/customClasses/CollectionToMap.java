@@ -5,17 +5,17 @@
  */
 package com.storage.managers.customClasses;
 
-import com.storage.repositories.entities.RolePermission;
+import com.storage.repositories.entities.Permission;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class CollectionToMap {
-    public static Map<Long,String> convertCollectionToMap(Collection<RolePermission> permissions){
+    public static Map<Long,String> convertCollectionToMap(Collection<Permission> permissions){
         Map<Long,String> map = new HashMap<>();
         permissions.forEach(permission->{
-            map.put(permission.getPermission().getId(), permission.getPermission().getPermissionName());
+            map.put(permission.getId(), permission.getPermissionName());
         });
         return map;
     }
