@@ -6,6 +6,7 @@
 package com.storage.managers;
 
 import com.storage.api.requests.RoleAndPermission.NewRoleRequest;
+import com.storage.api.requests.RoleAndPermission.UpdateRoleRequest;
 import com.storage.api.response.RoleAndPermission.NewRoleResponse;
 import com.storage.api.response.RoleAndPermission.RolesAndpermissionsWithIdsResponse;
 import com.storage.api.response.RoleAndPermission.RolesPermissionsResponse;
@@ -71,12 +72,12 @@ public class RolePermissionManagerImp implements RolePermissionManager{
             return null; // http status code
         else{
             roleRepository.save(newRole);
-            List<RolePermission> newRolePermissions = RolesAndPermissionsMapper.extractRolePermissionsIntheRequest(newRole, newRoleRequest);
+            List<RolePermission> newRolePermissions = RolesAndPermissionsMapper.extractRolePermissionsIntheRequest(newRole, newRoleRequest.getPermissionIds());
             rolePermissionRepository.saveAll(newRolePermissions);
             return RolesAndPermissionsMapper.newRoleResponse(newRole, newRolePermissions);
         }
 
        
     }
-    
+
 }
