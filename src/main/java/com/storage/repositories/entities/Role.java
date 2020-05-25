@@ -7,11 +7,15 @@ package com.storage.repositories.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -31,8 +35,12 @@ public class Role implements Serializable {
     @Column(name = "role_name")
     private String roleName;
     
-    @OneToMany(mappedBy = "role")
-    private List<RolePermission> rolePermissions;
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(
+        name = "roles_permissions", 
+        joinColumns = @JoinColumn(name = "role_id"), 
+        inverseJoinColumns = @JoinColumn(name = "permission_id")) 
+    private List<Permission> rolePermissions;
     
     @OneToMany(mappedBy = "role")
     private List<User> users;
@@ -65,14 +73,14 @@ public class Role implements Serializable {
         this.roleName = roleName;
     }
 
-    public List<RolePermission> getRolePermissions() {
+    public List<Permission> getRolePermissions() {
         return rolePermissions;
     }
 
-    public void setRolePermissions(List<RolePermission> rolePermissions) {
+    public void setRolePermissions(List<Permission> rolePermissions) {
         this.rolePermissions = rolePermissions;
     }
-
+    
     public List<User> getUsers() {
         return users;
     }
