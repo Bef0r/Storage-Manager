@@ -67,7 +67,7 @@ public class RolePermissionManagerImp implements RolePermissionManager{
     @Override
     public NewRoleResponse createNewRoleWithPermissions(NewRoleRequest newRoleRequest) {
         Role newRole = RolesAndPermissionsMapper.extractNewRoleNameIntheRequest(newRoleRequest);
-        if(roleRepository.existsByRoleName(newRole.getRoleName().toUpperCase()))
+        if(roleRepository.existsByRoleName(newRole.getRoleName()))
             return null; // http status code
         else{
             roleRepository.save(newRole);
