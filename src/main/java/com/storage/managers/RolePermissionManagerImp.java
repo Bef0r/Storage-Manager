@@ -5,17 +5,20 @@
  */
 package com.storage.managers;
 
+import com.storage.api.requests.RoleAndPermission.NewRoleRequest;
+import com.storage.api.response.RoleAndPermission.NewRoleResponse;
 import com.storage.api.response.RoleAndPermission.RolesAndpermissionsWithIdsResponse;
 import com.storage.api.response.RoleAndPermission.RolesPermissionsResponse;
 import com.storage.managers.customClasses.CollectionToMap;
 import com.storage.managers.interfaces.RolePermissionManager;
 import com.storage.managers.mappers.RolesAndPermissionsMapper;
 import com.storage.repositories.PermissionRepository;
+import com.storage.repositories.RolePermissionRepository;
 import com.storage.repositories.RoleRepository;
 import com.storage.repositories.entities.Permission;
 import com.storage.repositories.entities.Role;
 import com.storage.repositories.entities.RolePermission;
-import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -27,11 +30,13 @@ public class RolePermissionManagerImp implements RolePermissionManager{
 
     RoleRepository roleRepository;
     PermissionRepository permissionRepository;
+    RolePermissionRepository rolePermissionRepository;
 
     @Autowired
-    public RolePermissionManagerImp(RoleRepository roleRepository, PermissionRepository permissionRepository) {
+    public RolePermissionManagerImp(RoleRepository roleRepository, PermissionRepository permissionRepository,RolePermissionRepository rolePermissionRepository) {
         this.roleRepository = roleRepository;
         this.permissionRepository = permissionRepository;
+        this.rolePermissionRepository = rolePermissionRepository;
     }
 
     @Override
@@ -58,4 +63,20 @@ public class RolePermissionManagerImp implements RolePermissionManager{
             return RolesAndPermissionsMapper.getRolePermissionIdResponse(roleId, permissions);
         }
     }
+
+    @Override
+    public NewRoleResponse createNewRoleWithPermissions(NewRoleRequest newRoleRequest) {
+        Role newRole = RolesAndPermissionsMapper.extractNewRoleNameIntheRequest(newRoleRequest);
+        if(roleRepository.existsByRoleName(newRole.getRoleName().toUpperCase()))
+            return null; // http status code
+        else{
+            roleRepository.save(newRole);
+            List<RolePermission> newRolePermissions = RolesAndPermissionsMapper.extractRolePermissionsIntheRequest(newRole, newRoleRequest);
+            rolePermissionRepository.saveAll(newRolePermissions);
+            return RolesAndPermissionsMapper.newRoleResponse(newRole, newRolePermissions);
+        }
+
+       
+    }
+    
 }
