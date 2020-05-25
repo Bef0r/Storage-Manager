@@ -11,8 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -27,20 +25,11 @@ public class RolePermission implements Serializable {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ROLES_PERMISSIONS_ID_GENERATOR")
     private Long id;
     
-    @JoinColumn(name = "permission_id")
-    @ManyToOne()
-    private Permission permission;
+    @Column(name = "role_id")
+    private Long roleId;
     
-    @JoinColumn(name = "role_id")
-    @ManyToOne()
-    private Role role;
-
-    public RolePermission() {
-    }
-
-    public RolePermission(Long id) {
-        this.id = id;
-    }
+    @Column(name = "permission_id")
+    private Long permissionId;
 
     public Long getId() {
         return id;
@@ -50,20 +39,21 @@ public class RolePermission implements Serializable {
         this.id = id;
     }
 
-    public Permission getPermission() {
-        return permission;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setPermission(Permission permission) {
-        this.permission = permission;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
-    public Role getRole() {
-        return role;
+    public Long getPermissionId() {
+        return permissionId;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setPermissionId(Long permissionId) {
+        this.permissionId = permissionId;
     }
+    
     
 }
