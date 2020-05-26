@@ -29,7 +29,7 @@ public class RoleAndPermissionController {
     RolePermissionManager rolePermissionManager;
 
     
-    @GetMapping(path ="/")
+    @GetMapping()
     public RolesAndpermissionsWithIdsResponse getRolesAndpermissionsWithIdsResponse(){
         return rolePermissionManager.getAllRolesAndPermissionsWithIds();
     }
