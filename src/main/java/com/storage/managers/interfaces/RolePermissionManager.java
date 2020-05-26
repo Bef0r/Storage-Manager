@@ -7,6 +7,7 @@ package com.storage.managers.interfaces;
 
 import com.storage.api.requests.RoleAndPermission.NewRoleRequest;
 import com.storage.api.requests.RoleAndPermission.UpdateRoleRequest;
+import com.storage.api.response.RoleAndPermission.DeleteRoleResponse;
 import com.storage.api.response.RoleAndPermission.NewRoleResponse;
 import com.storage.api.response.RoleAndPermission.RolesAndpermissionsWithIdsResponse;
 import com.storage.api.response.RoleAndPermission.RolesPermissionsResponse;
@@ -18,4 +19,5 @@ public interface RolePermissionManager {
     public RolesPermissionsResponse getRolePermissions(long roleId);
     public NewRoleResponse createNewRoleWithPermissions(NewRoleRequest newRoleRequest);
     public UpdateRoleResponse updateRolePermissions(long roleId, UpdateRoleRequest updateRoleRequest);
+    public DeleteRoleResponse deleteRoleWithPermissions(long roleId);
 }
