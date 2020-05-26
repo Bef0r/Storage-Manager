@@ -12,19 +12,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
 public class CollectionToMap {
-    public static Map<Long,String> convertCollectionToMap(List<Permission> permissions){
-        Map<Long,String> map = new HashMap<>();
-        permissions.forEach(permission->{
+
+    public static Map<Long, String> convertCollectionToMap(List<Permission> permissions) {
+        Map<Long, String> map = new HashMap<>();
+        permissions.forEach(permission -> {
             map.put(permission.getId(), permission.getPermissionName());
         });
         return map;
     }
-    
-    public static List<Long> convertRolePermissionPermissionIdsToList(List<RolePermission> rolePermissions){
+
+    public static List<Long> convertRolePermissionPermissionIdsToList(List<RolePermission> rolePermissions) {
         List<Long> permissionId = new LinkedList<>();
-        rolePermissions.forEach(relationships->{
+        rolePermissions.forEach(relationships -> {
             permissionId.add(relationships.getPermissionId());
         });
         return permissionId;
