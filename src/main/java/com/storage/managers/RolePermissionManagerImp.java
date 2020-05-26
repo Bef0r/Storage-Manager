@@ -7,6 +7,7 @@ package com.storage.managers;
 
 import com.storage.api.requests.RoleAndPermission.NewRoleRequest;
 import com.storage.api.requests.RoleAndPermission.UpdateRoleRequest;
+import com.storage.api.response.RoleAndPermission.DeleteRoleResponse;
 import com.storage.api.response.RoleAndPermission.NewRoleResponse;
 import com.storage.api.response.RoleAndPermission.RolesAndpermissionsWithIdsResponse;
 import com.storage.api.response.RoleAndPermission.RolesPermissionsResponse;
@@ -25,6 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -96,7 +98,7 @@ public class RolePermissionManagerImp implements RolePermissionManager {
 
     private int deletePermissioRelationships(List<RolePermission> allRolePermissions, List<Long> deletePermissionIds) {
         List<RolePermission> rolePermissionsermissions = new LinkedList<>();
-        if (deletePermissionIds.size()>0) {
+        if (deletePermissionIds.size() > 0) {
             rolePermissionsermissions = RolesAndPermissionsMapper.selectionDeleteEntities(allRolePermissions, deletePermissionIds);
             rolePermissionRepository.deleteAll(rolePermissionsermissions);
         }
@@ -105,10 +107,21 @@ public class RolePermissionManagerImp implements RolePermissionManager {
 
     private List<RolePermission> savePermissioRelationships(long roleId, List<Long> savePermissionIds) {
         List<RolePermission> saveRolePermissions = new LinkedList<>();
-        if (savePermissionIds.size()>0) {
+        if (savePermissionIds.size() > 0) {
             saveRolePermissions = RolesAndPermissionsMapper.createRolePermissionsMapper(roleId, savePermissionIds);
             rolePermissionRepository.saveAll(saveRolePermissions);
         }
         return saveRolePermissions;
+    }
+
+    @Override
+    public DeleteRoleResponse deleteRoleWithPermissions(long roleId) {
+        List<RolePermission> rolePermissionRelationships = rolePermissionRepository.findAllByRoleId(roleId);
+        int sizeOfList = rolePermissionRelationships.size();
+        if (sizeOfList > 0) {
+            rolePermissionRepository.deleteAll(rolePermissionRelationships);
+        }
+        roleRepository.deleteById(roleId);
+        return RolesAndPermissionsMapper.deleteRolePermissionsMapper(roleId, sizeOfList);
     }
 }
