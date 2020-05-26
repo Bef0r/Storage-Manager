@@ -6,8 +6,9 @@
 package com.storage.repositories;
 
 import com.storage.repositories.entities.RolePermission;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 public interface RolePermissionRepository extends CrudRepository<RolePermission, Long> {
-    
+    public List<RolePermission> findAllByRoleId(Long roleId);
 }
