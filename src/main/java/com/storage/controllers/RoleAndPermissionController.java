@@ -7,12 +7,14 @@ package com.storage.controllers;
 
 import com.storage.api.requests.RoleAndPermission.NewRoleRequest;
 import com.storage.api.requests.RoleAndPermission.UpdateRoleRequest;
+import com.storage.api.response.RoleAndPermission.DeleteRoleResponse;
 import com.storage.api.response.RoleAndPermission.NewRoleResponse;
 import com.storage.api.response.RoleAndPermission.RolesAndpermissionsWithIdsResponse;
 import com.storage.api.response.RoleAndPermission.RolesPermissionsResponse;
 import com.storage.api.response.RoleAndPermission.UpdateRoleResponse;
 import com.storage.managers.interfaces.RolePermissionManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,6 +49,11 @@ public class RoleAndPermissionController {
     @PutMapping(path ="/{roleId}")
     public UpdateRoleResponse updateRole(@PathVariable("roleId") long roleId, @RequestBody UpdateRoleRequest updateRoleRequest){
         return rolePermissionManager.updateRolePermissions(roleId,updateRoleRequest);
+    }
+    
+    @DeleteMapping(path ="/{roleId}")
+    public DeleteRoleResponse  deleteRoleWithPermissions(@PathVariable("roleId") long roleId){
+        return rolePermissionManager.deleteRoleWithPermissions(roleId);
     }
             
 }
