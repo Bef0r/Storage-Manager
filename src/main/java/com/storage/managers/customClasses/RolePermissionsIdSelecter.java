@@ -9,15 +9,15 @@ import com.storage.repositories.entities.RolePermission;
 import java.util.List;
 
 public class RolePermissionsIdSelecter {
-
+    List<Long> allRolePermissionIds;
     List<Long> sameRequestIdAndInDatabaseIds;
     List<Long> deleteIds;
     List<Long> saveIds;
 
     public RolePermissionsIdSelecter(List<RolePermission> dbPermissionIds, List<Long> requestPermissionIds) {
-        List<Long> permissionId = CollectionToMap.convertRolePermissionPermissionIdsToList(dbPermissionIds);
-        this.sameRequestIdAndInDatabaseIds = OperationsOfTwoLists.getListsUnio(requestPermissionIds, permissionId);
-        this.deleteIds = OperationsOfTwoLists.getADifferenceB(permissionId, sameRequestIdAndInDatabaseIds);
+        this.allRolePermissionIds = CollectionToMap.convertRolePermissionPermissionIdsToList(dbPermissionIds);
+        this.sameRequestIdAndInDatabaseIds = OperationsOfTwoLists.getListsUnio(requestPermissionIds, allRolePermissionIds);
+        this.deleteIds = OperationsOfTwoLists.getADifferenceB(allRolePermissionIds, sameRequestIdAndInDatabaseIds);
         this.saveIds = OperationsOfTwoLists.getADifferenceB(requestPermissionIds, sameRequestIdAndInDatabaseIds);
     }
 
