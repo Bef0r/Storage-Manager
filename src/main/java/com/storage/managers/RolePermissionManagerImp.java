@@ -12,7 +12,6 @@ import com.storage.api.response.RoleAndPermission.RolesAndpermissionsWithIdsResp
 import com.storage.api.response.RoleAndPermission.RolesPermissionsResponse;
 import com.storage.api.response.RoleAndPermission.UpdateRoleResponse;
 import com.storage.managers.customClasses.CollectionToMap;
-import com.storage.managers.customClasses.OperationsOfTwoLists;
 import com.storage.managers.customClasses.RolePermissionsIdSelecter;
 import com.storage.managers.interfaces.RolePermissionManager;
 import com.storage.managers.mappers.RolesAndPermissionsMapper;
@@ -22,7 +21,6 @@ import com.storage.repositories.RoleRepository;
 import com.storage.repositories.entities.Permission;
 import com.storage.repositories.entities.Role;
 import com.storage.repositories.entities.RolePermission;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
