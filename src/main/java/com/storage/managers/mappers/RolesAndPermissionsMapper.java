@@ -6,6 +6,7 @@
 package com.storage.managers.mappers;
 
 import com.storage.api.requests.RoleAndPermission.NewRoleRequest;
+import com.storage.api.response.RoleAndPermission.DeleteRoleResponse;
 import com.storage.api.response.RoleAndPermission.NewRoleResponse;
 import com.storage.api.response.RoleAndPermission.RolesAndpermissionsWithIdsResponse;
 import com.storage.api.response.RoleAndPermission.RolesPermissionsResponse;
@@ -116,5 +117,12 @@ public class RolesAndPermissionsMapper {
                 rolePermissionsermissions.add(permission);
         });
         return rolePermissionsermissions;
+    }
+    
+    public static DeleteRoleResponse deleteRolePermissionsMapper(long roleId, int numberOfDeletedPermissions){
+        DeleteRoleResponse response = new DeleteRoleResponse();
+        response.setRoleId(roleId);
+        response.setNumberOfDeletedPermissions(numberOfDeletedPermissions);
+        return response;
     }
 }
