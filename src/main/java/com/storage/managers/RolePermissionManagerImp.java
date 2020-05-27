@@ -26,7 +26,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -46,8 +45,8 @@ public class RolePermissionManagerImp implements RolePermissionManager {
 
     @Override
     public RolesAndpermissionsWithIdsResponse getAllRolesAndPermissionsWithIds() {
-        List<Role> roles = (List<Role>) roleRepository.findAll();
-        List<Permission> permissions = (List<Permission>) permissionRepository.findAll();
+        List<Role> roles = roleRepository.findAll();
+        List<Permission> permissions = permissionRepository.findAll();
         RolesAndpermissionsWithIdsResponse response = mappedGetAllRolesAndPermissionsWithIdsResponse(roles, permissions);
         return response;
     }
@@ -86,14 +85,10 @@ public class RolePermissionManagerImp implements RolePermissionManager {
     @Override
     public UpdateRoleResponse updateRolePermissions(long roleId, UpdateRoleRequest updateRoleRequest) {
         List<RolePermission> rolePermissions = rolePermissionRepository.findAllByRoleId(roleId);
-        if (rolePermissions.isEmpty()) {
-            return null; // http status code
-        } else {
-            RolePermissionsIdSelecter selector = new RolePermissionsIdSelecter(rolePermissions, updateRoleRequest.getPermissionIds());
-            int deletedRows = deletePermissioRelationships(rolePermissions, selector.getDeleteIds());
-            savePermissioRelationships(roleId, selector.getSaveIds());
-            return RolesAndPermissionsMapper.updateRoleResponse(selector.getSaveIds(), roleId, selector.getSameRequestIdAndInDatabaseIds(), deletedRows);
-        }
+        RolePermissionsIdSelecter selector = new RolePermissionsIdSelecter(rolePermissions, updateRoleRequest.getPermissionIds());
+        int deletedRows = deletePermissioRelationships(rolePermissions, selector.getDeleteIds());
+        savePermissioRelationships(roleId, selector.getSaveIds());
+        return RolesAndPermissionsMapper.updateRoleResponse(selector.getSaveIds(), roleId, selector.getSameRequestIdAndInDatabaseIds(), deletedRows);
     }
 
     private int deletePermissioRelationships(List<RolePermission> allRolePermissions, List<Long> deletePermissionIds) {
