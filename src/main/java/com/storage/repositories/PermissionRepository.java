@@ -6,6 +6,7 @@
 package com.storage.repositories;
 
 import com.storage.repositories.entities.Permission;
+import java.util.List;
 
 import java.util.Optional;
 
@@ -14,5 +15,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface PermissionRepository extends CrudRepository<Permission, Long> {
 
     public Optional<Permission> findById(long i);
-    
+    @Override
+    public List<Permission> findAll();
 }

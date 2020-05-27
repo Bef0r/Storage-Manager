@@ -6,8 +6,11 @@
 package com.storage.repositories;
 
 import com.storage.repositories.entities.Role;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 public interface RoleRepository extends CrudRepository<Role, Long> {
     boolean existsByRoleName(String roleName);
+    @Override
+    List<Role>  findAll();
 }
