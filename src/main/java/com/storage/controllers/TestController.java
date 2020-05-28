@@ -5,31 +5,34 @@
  */
 package com.storage.controllers;
 
+import com.storage.controllers.exceptions.customException;
+import aj.org.objectweb.asm.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.storage.repositories.BlueprintRepository;
 import com.storage.repositories.LocationRepository;
 import com.storage.repositories.PermissionRepository;
 import com.storage.repositories.RoleRepository;
 import com.storage.repositories.UserRepository;
 import com.storage.repositories.WorkpieceRepository;
-import com.storage.repositories.entities.Blueprint;
-import com.storage.repositories.entities.Location;
-import com.storage.repositories.entities.Permission;
-import com.storage.repositories.entities.Role;
-import com.storage.repositories.entities.User;
-import com.storage.repositories.entities.Workpiece;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-
 @RestController
 @RequestMapping("rest/test")
 public class TestController {
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -42,15 +45,14 @@ public class TestController {
     private LocationRepository locationRepository;
     @Autowired
     private WorkpieceRepository workpieceRepository;
-    
-    @GetMapping(path ="/")
-    public String test(){
-    	Optional<Blueprint> b = blueprintRepository.findById("1");
-    	Location e = locationRepository.findById(1);
-    	User u = userRepository.findById(1);
-        Optional<Permission> p = permissionRepository.findById(1);
-        Workpiece w = workpieceRepository.findById(1);
-    	Blueprint b1 = new Blueprint();
-        return b1.generateWorkpieceIdOnlyTest();
+
+    @GetMapping(path = "/")
+    public String test() throws IOException {
+        File file = new ClassPathResource("t.json").getFile();
+        String test = new String(Files.readAllBytes(file.toPath()));
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<customException> test2 = Arrays.asList(objectMapper.readValue(test, customException[].class));
+        String z = test2.stream().filter(t-> t.getERROR_CODE()==1000).map(mapper->mapper.getEN()).collect(Collectors.joining());
+        return z.toString();
     }
 }
