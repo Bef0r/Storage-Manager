@@ -14,6 +14,7 @@ import com.storage.api.response.RoleAndPermission.RolesPermissionsResponse;
 import com.storage.api.response.RoleAndPermission.UpdateRoleResponse;
 import com.storage.managers.customClasses.CollectionToMap;
 import com.storage.managers.customClasses.RolePermissionsIdSelecter;
+import com.storage.managers.exceptions.RoleNameAlreadyExistsException;
 import com.storage.managers.interfaces.RolePermissionManager;
 import com.storage.managers.mappers.RolesAndPermissionsMapper;
 import com.storage.repositories.PermissionRepository;
@@ -26,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -61,18 +63,18 @@ public class RolePermissionManagerImp implements RolePermissionManager {
     public RolesPermissionsResponse getRolePermissions(long roleId) {
         Optional<Role> role = roleRepository.findById(roleId);
         if (role.isEmpty()) {
-            return null; // http status code
+            throw new EntityNotFoundException();
         } else {
             Map<Long, String> permissions = CollectionToMap.convertCollectionToMap(role.get().getRolePermissions());
             return RolesAndPermissionsMapper.getRolePermissionIdResponse(roleId, permissions);
+            }
         }
-    }
 
     @Override
-    public NewRoleResponse createNewRoleWithPermissions(NewRoleRequest newRoleRequest) {
+    public NewRoleResponse createNewRoleWithPermissions(NewRoleRequest newRoleRequest) throws RoleNameAlreadyExistsException {
         Role newRole = RolesAndPermissionsMapper.extractNewRoleNameIntheRequest(newRoleRequest);
         if (roleRepository.existsByRoleName(newRole.getRoleName())) {
-            return null; // http status code
+            throw new RoleNameAlreadyExistsException();
         } else {
             roleRepository.save(newRole);
             List<RolePermission> newRolePermissions = RolesAndPermissionsMapper.extractRolePermissionsIntheRequest(newRole, newRoleRequest.getPermissionIds());
@@ -111,12 +113,17 @@ public class RolePermissionManagerImp implements RolePermissionManager {
 
     @Override
     public DeleteRoleResponse deleteRoleWithPermissions(long roleId) {
-        List<RolePermission> rolePermissionRelationships = rolePermissionRepository.findAllByRoleId(roleId);
-        int sizeOfList = rolePermissionRelationships.size();
-        if (sizeOfList > 0) {
-            rolePermissionRepository.deleteAll(rolePermissionRelationships);
+        Optional<Role> deleteRole = roleRepository.findById(roleId); //maybe role's permissions mapped to role
+        if (deleteRole.isEmpty()) {
+            List<RolePermission> rolePermissionRelationships = rolePermissionRepository.findAllByRoleId(roleId);
+            int sizeOfList = rolePermissionRelationships.size();
+            if (sizeOfList > 0) {
+                rolePermissionRepository.deleteAll(rolePermissionRelationships);
+            }
+            roleRepository.deleteById(roleId);
+            return RolesAndPermissionsMapper.deleteRolePermissionsMapper(roleId, sizeOfList);
         }
-        roleRepository.deleteById(roleId);
-        return RolesAndPermissionsMapper.deleteRolePermissionsMapper(roleId, sizeOfList);
+        else
+            throw new EntityNotFoundException();
     }
 }
