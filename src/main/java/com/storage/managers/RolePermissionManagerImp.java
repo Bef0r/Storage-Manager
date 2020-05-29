@@ -126,6 +126,7 @@ public class RolePermissionManagerImp implements RolePermissionManager {
     }
 
     @Override
+    @Transactional
     public DeleteRoleResponse deleteRoleWithPermissions(long roleId) {
         Optional<Role> deleteRole = roleRepository.findById(roleId); //maybe role's permissions mapped to role
         if (!deleteRole.isEmpty()) {
