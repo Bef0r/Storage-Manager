@@ -13,12 +13,14 @@ import com.storage.api.response.RoleAndPermission.RolesAndpermissionsWithIdsResp
 import com.storage.api.response.RoleAndPermission.RolesPermissionsResponse;
 import com.storage.api.response.RoleAndPermission.UpdateRoleResponse;
 import com.storage.managers.exceptions.RoleNameAlreadyExistsException;
+import com.storage.managers.exceptions.RoleUpdateCreatedException;
+import com.storage.managers.exceptions.RoleUpdateDeleteException;
 
 
 public interface RolePermissionManager {
     public RolesAndpermissionsWithIdsResponse getAllRolesAndPermissionsWithIds();
     public RolesPermissionsResponse getRolePermissions(long roleId);
     public NewRoleResponse createNewRoleWithPermissions(NewRoleRequest newRoleRequest) throws RoleNameAlreadyExistsException;
-    public UpdateRoleResponse updateRolePermissions(long roleId, UpdateRoleRequest updateRoleRequest);
+    public UpdateRoleResponse updateRolePermissions(long roleId, UpdateRoleRequest updateRoleRequest) throws RoleUpdateDeleteException, RoleUpdateCreatedException;
     public DeleteRoleResponse deleteRoleWithPermissions(long roleId);
 }

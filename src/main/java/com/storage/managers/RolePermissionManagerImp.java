@@ -15,6 +15,8 @@ import com.storage.api.response.RoleAndPermission.UpdateRoleResponse;
 import com.storage.managers.customClasses.CollectionToMap;
 import com.storage.managers.customClasses.RolePermissionsIdSelecter;
 import com.storage.managers.exceptions.RoleNameAlreadyExistsException;
+import com.storage.managers.exceptions.RoleUpdateCreatedException;
+import com.storage.managers.exceptions.RoleUpdateDeleteException;
 import com.storage.managers.interfaces.RolePermissionManager;
 import com.storage.managers.mappers.RolesAndPermissionsMapper;
 import com.storage.repositories.PermissionRepository;
@@ -67,8 +69,8 @@ public class RolePermissionManagerImp implements RolePermissionManager {
         } else {
             Map<Long, String> permissions = CollectionToMap.convertCollectionToMap(role.get().getRolePermissions());
             return RolesAndPermissionsMapper.getRolePermissionIdResponse(roleId, permissions);
-            }
         }
+    }
 
     @Override
     public NewRoleResponse createNewRoleWithPermissions(NewRoleRequest newRoleRequest) throws RoleNameAlreadyExistsException {
@@ -85,7 +87,7 @@ public class RolePermissionManagerImp implements RolePermissionManager {
     }
 
     @Override
-    public UpdateRoleResponse updateRolePermissions(long roleId, UpdateRoleRequest updateRoleRequest) {
+    public UpdateRoleResponse updateRolePermissions(long roleId, UpdateRoleRequest updateRoleRequest) throws RoleUpdateDeleteException, RoleUpdateCreatedException{
         List<RolePermission> rolePermissions = rolePermissionRepository.findAllByRoleId(roleId);
         RolePermissionsIdSelecter selector = new RolePermissionsIdSelecter(rolePermissions, updateRoleRequest.getPermissionIds());
         int deletedRows = deletePermissioRelationships(rolePermissions, selector.getDeleteIds());
@@ -93,20 +95,29 @@ public class RolePermissionManagerImp implements RolePermissionManager {
         return RolesAndPermissionsMapper.updateRoleResponse(selector.getSaveIds(), roleId, selector.getSameRequestIdAndInDatabaseIds(), deletedRows);
     }
 
-    private int deletePermissioRelationships(List<RolePermission> allRolePermissions, List<Long> deletePermissionIds) {
+    private int deletePermissioRelationships(List<RolePermission> allRolePermissions, List<Long> deletePermissionIds) throws RoleUpdateDeleteException {
         List<RolePermission> rolePermissionsermissions = new LinkedList<>();
         if (deletePermissionIds.size() > 0) {
             rolePermissionsermissions = RolesAndPermissionsMapper.selectionDeleteEntities(allRolePermissions, deletePermissionIds);
-            rolePermissionRepository.deleteAll(rolePermissionsermissions);
+            try {
+                rolePermissionRepository.deleteAll(rolePermissionsermissions);
+            } catch (Exception e) {
+                throw new RoleUpdateDeleteException("The api cannot be deleted");
+            }
         }
         return rolePermissionsermissions.size();
     }
 
-    private List<RolePermission> savePermissioRelationships(long roleId, List<Long> savePermissionIds) {
+    private List<RolePermission> savePermissioRelationships(long roleId, List<Long> savePermissionIds) throws RoleUpdateCreatedException {
         List<RolePermission> saveRolePermissions = new LinkedList<>();
         if (savePermissionIds.size() > 0) {
             saveRolePermissions = RolesAndPermissionsMapper.createRolePermissionsMapper(roleId, savePermissionIds);
-            rolePermissionRepository.saveAll(saveRolePermissions);
+            try {
+                rolePermissionRepository.saveAll(saveRolePermissions);
+            } catch (Exception e) {
+                throw new RoleUpdateCreatedException("the api cannot be create");
+            }
+
         }
         return saveRolePermissions;
     }
@@ -114,16 +125,16 @@ public class RolePermissionManagerImp implements RolePermissionManager {
     @Override
     public DeleteRoleResponse deleteRoleWithPermissions(long roleId) {
         Optional<Role> deleteRole = roleRepository.findById(roleId); //maybe role's permissions mapped to role
-        if (deleteRole.isEmpty()) {
+        if (!deleteRole.isEmpty()) {
             List<RolePermission> rolePermissionRelationships = rolePermissionRepository.findAllByRoleId(roleId);
             int sizeOfList = rolePermissionRelationships.size();
             if (sizeOfList > 0) {
                 rolePermissionRepository.deleteAll(rolePermissionRelationships);
             }
-            roleRepository.deleteById(roleId);
+            roleRepository.delete(deleteRole.get());
             return RolesAndPermissionsMapper.deleteRolePermissionsMapper(roleId, sizeOfList);
-        }
-        else
+        } else {
             throw new EntityNotFoundException();
+        }
     }
 }
