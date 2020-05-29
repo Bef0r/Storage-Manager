@@ -10,8 +10,12 @@ import com.storage.api.requests.RoleAndPermission.UpdateRoleRequest;
 import com.storage.controllers.exceptions.LanguageAndDescriptionSelector;
 import com.storage.controllers.exceptions.exceptionConstans.ExceptionConstans;
 import com.storage.managers.exceptions.RoleNameAlreadyExistsException;
+import com.storage.managers.exceptions.RoleUpdateCreatedException;
+import com.storage.managers.exceptions.RoleUpdateDeleteException;
 import com.storage.managers.interfaces.RolePermissionManager;
 import javax.persistence.EntityNotFoundException;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +33,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/rest/roleandpermission")
 public class RoleAndPermissionController {
 
+    private static final Logger logger = LogManager.getLogger(RoleAndPermissionController.class);
+
     @Autowired
     RolePermissionManager rolePermissionManager;
 
     @GetMapping()
     public ResponseEntity<?> getRolesAndpermissionsWithIdsResponse() {
-        return ResponseEntity.ok(rolePermissionManager.getAllRolesAndPermissionsWithIds());
+        try {
+            return ResponseEntity.ok(rolePermissionManager.getAllRolesAndPermissionsWithIds());
+        } catch (Exception e) {
+            logger.error("getRolesAndpermissionsWithIdsResponse" + "    " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ExceptionConstans.DEFAULT_EXCEPTON_MESSAGE);
+        }
     }
 
     @GetMapping(path = "/{roleId}")
@@ -42,8 +53,12 @@ public class RoleAndPermissionController {
         try {
             return ResponseEntity.ok(rolePermissionManager.getRolePermissions(roleId));
         } catch (EntityNotFoundException entityException) {
+            logger.warn(ExceptionConstans.ROLE_DOES_NOT_EXISTS + "    " + entityException.getMessage());
             return ResponseEntity.status(ExceptionConstans.ROLE_DOES_NOT_EXISTS)
                     .body(LanguageAndDescriptionSelector.languageAndDescriptionSelector(language, ExceptionConstans.ROLE_DOES_NOT_EXISTS));
+        } catch (Exception e) {
+            logger.error("getRolepermissions" + "    " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ExceptionConstans.DEFAULT_EXCEPTON_MESSAGE);
         }
     }
 
@@ -52,8 +67,13 @@ public class RoleAndPermissionController {
         try {
             return ResponseEntity.ok(rolePermissionManager.createNewRoleWithPermissions(newRoleRequest));
         } catch (RoleNameAlreadyExistsException roleNameAlreadyExistsException) {
+            logger.warn(ExceptionConstans.ROLE_NAME_EXISTS + "    " + roleNameAlreadyExistsException);
             return ResponseEntity.status(ExceptionConstans.ROLE_NAME_EXISTS)
                     .body(LanguageAndDescriptionSelector.languageAndDescriptionSelector(language, ExceptionConstans.ROLE_NAME_EXISTS));
+        } catch (Exception e) {
+            logger.error("createdNewRole" + "    " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ExceptionConstans.DEFAULT_EXCEPTON_MESSAGE);
         }
     }
 
@@ -61,9 +81,17 @@ public class RoleAndPermissionController {
     public ResponseEntity<?> updateRole(@RequestHeader("accept-language") String language, @PathVariable("roleId") long roleId, @RequestBody UpdateRoleRequest updateRoleRequest) {
         try {
             return ResponseEntity.ok(rolePermissionManager.updateRolePermissions(roleId, updateRoleRequest));
-        } catch (Exception e) {
+        } catch (RoleUpdateCreatedException e) {
+            logger.warn(ExceptionConstans.ROLE_UPDATE_CREATE_ERROR + " " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(LanguageAndDescriptionSelector.languageAndDescriptionSelector(language, ExceptionConstans.INTERNAL_SERVER_ERROR_ROLE_UPDATE));
+        } catch (RoleUpdateDeleteException e) {
+            logger.warn(ExceptionConstans.ROLE_UPDATE_DELETE_ERROR + "    " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(LanguageAndDescriptionSelector.languageAndDescriptionSelector(language, ExceptionConstans.INTERNAL_SERVER_ERROR_ROLE_UPDATE));
+        } catch (Exception e) {
+            logger.error("updateRole" + "    " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ExceptionConstans.DEFAULT_EXCEPTON_MESSAGE);
         }
     }
 
@@ -72,8 +100,13 @@ public class RoleAndPermissionController {
         try {
             return ResponseEntity.ok(rolePermissionManager.deleteRoleWithPermissions(roleId));
         } catch (EntityNotFoundException entityNotFoundException) {
+            logger.warn(ExceptionConstans.ROLE_DOES_NOT_EXISTS + "    " + entityNotFoundException);
             return ResponseEntity.status(ExceptionConstans.ROLE_DOES_NOT_EXISTS)
-                    .body(LanguageAndDescriptionSelector.languageAndDescriptionSelector(language,ExceptionConstans.ROLE_DOES_NOT_EXISTS));
+                    .body(LanguageAndDescriptionSelector.languageAndDescriptionSelector(language, ExceptionConstans.ROLE_DOES_NOT_EXISTS));
+        } catch (Exception e) {
+            logger.error("deleteRoleWithPermissions" + "    " + e.getMessage());
+            return ResponseEntity.status(ExceptionConstans.ROLE_DOES_NOT_EXISTS)
+                    .body(LanguageAndDescriptionSelector.languageAndDescriptionSelector(language, ExceptionConstans.ROLE_DOES_NOT_EXISTS));
         }
     }
 
