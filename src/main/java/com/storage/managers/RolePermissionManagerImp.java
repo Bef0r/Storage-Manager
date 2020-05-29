@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -73,6 +74,7 @@ public class RolePermissionManagerImp implements RolePermissionManager {
     }
 
     @Override
+    @Transactional
     public NewRoleResponse createNewRoleWithPermissions(NewRoleRequest newRoleRequest) throws RoleNameAlreadyExistsException {
         Role newRole = RolesAndPermissionsMapper.extractNewRoleNameIntheRequest(newRoleRequest);
         if (roleRepository.existsByRoleName(newRole.getRoleName())) {
@@ -87,6 +89,7 @@ public class RolePermissionManagerImp implements RolePermissionManager {
     }
 
     @Override
+    @Transactional
     public UpdateRoleResponse updateRolePermissions(long roleId, UpdateRoleRequest updateRoleRequest) throws RoleUpdateDeleteException, RoleUpdateCreatedException{
         List<RolePermission> rolePermissions = rolePermissionRepository.findAllByRoleId(roleId);
         RolePermissionsIdSelecter selector = new RolePermissionsIdSelecter(rolePermissions, updateRoleRequest.getPermissionIds());
