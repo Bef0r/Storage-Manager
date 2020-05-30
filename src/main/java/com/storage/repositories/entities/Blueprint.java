@@ -2,7 +2,7 @@ package com.storage.repositories.entities;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Date;
+import java.util.Random;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -31,11 +32,11 @@ public class Blueprint implements Serializable {
     private ZonedDateTime  lastUpdatedDate;
     
     @JoinColumn(name = "desinger_id")
-    @ManyToOne
+    @OneToOne
     private User desinger;
     
     @JoinColumn(name = "last_updater_id")
-    @ManyToOne
+    @OneToOne
     private User lastUpdater;
     
     @JoinColumn(name = "workpiece_id")
@@ -97,4 +98,12 @@ public class Blueprint implements Serializable {
         this.workpiece = workpiece;
     }
     
+        public String generateWorkpieceIdOnlyTest(){
+        Random random = new Random();
+        String generatedString = "BLUEPRINT_";
+        for (int i = 0; i < 10; i++) {
+            generatedString= generatedString + random.nextInt(9);
+        }
+        return generatedString;
+    }
 }

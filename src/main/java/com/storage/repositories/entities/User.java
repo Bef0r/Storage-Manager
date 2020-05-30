@@ -8,7 +8,7 @@ package com.storage.repositories.entities;
 import com.storage.repositories.entities.enums.Languages;
 import com.storage.repositories.entities.enums.Units;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -28,7 +28,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="USERS_PERMISSIONS_ID_GENERATOR", sequenceName="SEQ_USERS")
+    @SequenceGenerator(name="USERS_ID_GENERATOR", sequenceName="SEQ_USERS")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USERS_ID_GENERATOR")
     @Column(name = "id")
     private Long id;
@@ -59,36 +59,16 @@ public class User implements Serializable {
     @Column(name = "dark_mode")
     private Boolean darkMode;
     
-    @OneToMany(mappedBy = "reservedUser")
-    private Collection<Workpiece> reservedWorkpieces;
-    
     @OneToMany(mappedBy = "orderUser")
-    private Collection<Workpiece> orderWorkpieces;
+    private List<Workpiece> orderWorkpieces;
     
-    @OneToMany(mappedBy = "desinger")
-    private Collection<Blueprint> desingnerBlueprints;
+    @OneToMany(mappedBy = "reservedUser")
+    private List<Workpiece> reservedWorkpieces;
     
-    @OneToMany(mappedBy = "lastUpdater")
-    private Collection<Blueprint> updatedBlueprints;
-    
-    @JoinColumn(name = "role_id")
-    @ManyToOne
-    private Role role;
+    @Column(name = "role_id")
+    private Long role;
 
     public User() {
-    }
-
-    public User(Long id) {
-        this.id = id;
-    }
-
-    public User(Long id, String userName, String pwd, String firstName, String lastName, String email) {
-        this.id = id;
-        this.userName = userName;
-        this.pwd = pwd;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
     }
 
     public Long getId() {
@@ -163,44 +143,28 @@ public class User implements Serializable {
         this.darkMode = darkMode;
     }
 
-    public Collection<Workpiece> getReservedWorkpieces() {
+    public List<Workpiece> getReservedWorkpieces() {
         return reservedWorkpieces;
     }
 
-    public void setReservedWorkpieces(Collection<Workpiece> reservedWorkpieces) {
+    public void setReservedWorkpieces(List<Workpiece> reservedWorkpieces) {
         this.reservedWorkpieces = reservedWorkpieces;
     }
-
-    public Collection<Workpiece> getOrderWorkpieces() {
+    
+    public List<Workpiece> getOrderWorkpieces() {
         return orderWorkpieces;
     }
 
-    public void setOrderWorkpieces(Collection<Workpiece> orderWorkpieces) {
+    public void setOrderWorkpieces(List<Workpiece> orderWorkpieces) {
         this.orderWorkpieces = orderWorkpieces;
     }
 
-    public Collection<Blueprint> getDesingnerBlueprints() {
-        return desingnerBlueprints;
-    }
-
-    public void setDesingnerBlueprints(Collection<Blueprint> desingnerBlueprints) {
-        this.desingnerBlueprints = desingnerBlueprints;
-    }
-
-    public Collection<Blueprint> getUpdatedBlueprints() {
-        return updatedBlueprints;
-    }
-
-    public void setUpdatedBlueprints(Collection<Blueprint> updatedBlueprints) {
-        this.updatedBlueprints = updatedBlueprints;
-    }
-
-    public Role getRole() {
+    public Long getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(Long role) {
         this.role = role;
     }
-
+    
 }

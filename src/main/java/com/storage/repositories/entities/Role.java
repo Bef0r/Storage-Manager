@@ -6,12 +6,16 @@
 package com.storage.repositories.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -31,22 +35,17 @@ public class Role implements Serializable {
     @Column(name = "role_name")
     private String roleName;
     
-    @OneToMany(mappedBy = "role")
-    private Collection<RolePermission> rolePermissions;
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(
+        name = "roles_permissions", 
+        joinColumns = @JoinColumn(name = "role_id"), 
+        inverseJoinColumns = @JoinColumn(name = "permission_id")) 
+    private List<Permission> rolePermissions;
     
     @OneToMany(mappedBy = "role")
-    private Collection<User> users;
+    private List<User> users;
 
     public Role() {
-    }
-
-    public Role(Long id) {
-        this.id = id;
-    }
-
-    public Role(Long id, String roleName) {
-        this.id = id;
-        this.roleName = roleName;
     }
 
     public Long getId() {
@@ -65,19 +64,19 @@ public class Role implements Serializable {
         this.roleName = roleName;
     }
 
-    public Collection<RolePermission> getRolePermissions() {
+    public List<Permission> getRolePermissions() {
         return rolePermissions;
     }
 
-    public void setRolePermissions(Collection<RolePermission> rolePermissions) {
+    public void setRolePermissions(List<Permission> rolePermissions) {
         this.rolePermissions = rolePermissions;
     }
-
-    public Collection<User> getUsers() {
+    
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Collection<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 

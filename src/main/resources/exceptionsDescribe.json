@@ -1,0 +1,20 @@
+[
+{   
+    "ERROR_CODE": 1000,
+    "EN": "Role does not exists!",
+    "HU": "A szerepkör nem létezik!",
+    "DE": "Német"
+},
+{
+    "ERROR_CODE": 1001,
+    "EN": "Role already exists!",
+    "HU": "A szerepkör már létezik!",
+    "DE": "Német"
+},
+{
+    "ERROR_CODE": 1002,
+    "EN": "An error occurred during the modification!",
+    "HU": "A módosítás során hiba lépett fel!",
+    "DE": "Német"
+}
+]

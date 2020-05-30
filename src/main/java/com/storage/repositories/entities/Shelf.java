@@ -6,7 +6,7 @@
 package com.storage.repositories.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +22,7 @@ public class Shelf implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="SHELFS_PERMISSIONS_ID_GENERATOR", sequenceName="SEQ_SHELFS")
+    @SequenceGenerator(name="SHELFS_ID_GENERATOR", sequenceName="SEQ_SHELFS")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHELFS_ID_GENERATOR")
     @Column(name = "id")
     private Long id;
@@ -31,7 +31,7 @@ public class Shelf implements Serializable {
     private String name;
     
     @OneToMany(mappedBy = "shelf")
-    private Collection<Location> locations;
+    private List<Location> locations;
 
     public Shelf() {
     }
@@ -56,11 +56,11 @@ public class Shelf implements Serializable {
         this.name = name;
     }
 
-    public Collection<Location> getLocations() {
+    public List<Location> getLocations() {
         return locations;
     }
 
-    public void setLocations(Collection<Location> locations) {
+    public void setLocations(List<Location> locations) {
         this.locations = locations;
     }
     

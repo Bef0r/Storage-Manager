@@ -9,7 +9,7 @@ import com.storage.repositories.entities.enums.Materials;
 import com.storage.repositories.entities.enums.Shapes;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -29,7 +29,7 @@ public class Workpiece implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="WORKPIECES_PERMISSIONS_ID_GENERATOR", sequenceName="SEQ_WORKPIECES")
+    @SequenceGenerator(name="WORKPIECES_ID_GENERATOR", sequenceName="SEQ_WORKPIECES")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="WORKPIECES_ID_GENERATOR")
     @Column(name = "id")
     private Long id;
@@ -75,10 +75,10 @@ public class Workpiece implements Serializable {
     private User orderUser;
     
     @OneToMany(mappedBy = "workpiece")
-    private Collection<Blueprint> blueprints;
+    private List<Blueprint> blueprints;
     
     @OneToMany(mappedBy = "workpiece")
-    private Collection<Location> locations;
+    private List<Location> locations;
 
     public Workpiece() {
     }
@@ -191,20 +191,20 @@ public class Workpiece implements Serializable {
         this.orderUser = orderUser;
     }
 
-    public Collection<Blueprint> getBlueprints() {
+    public List<Blueprint> getBlueprints() {
         return blueprints;
     }
 
-    public void setBlueprints(Collection<Blueprint> blueprints) {
+    public void setBlueprints(List<Blueprint> blueprints) {
         this.blueprints = blueprints;
     }
 
-    public Collection<Location> getLocations() {
+    public List<Location> getLocations() {
         return locations;
     }
 
-    public void setLocations(Collection<Location> locations) {
+    public void setLocations(List<Location> locations) {
         this.locations = locations;
     }
-    
+       
 }
