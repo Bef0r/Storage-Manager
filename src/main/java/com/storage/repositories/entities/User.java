@@ -65,24 +65,10 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "reservedUser")
     private List<Workpiece> reservedWorkpieces;
     
-    @JoinColumn(name = "role_id")
-    @ManyToOne
-    private Role role;
+    @Column(name = "role_id")
+    private Long role;
 
     public User() {
-    }
-
-    public User(Long id) {
-        this.id = id;
-    }
-
-    public User(Long id, String userName, String pwd, String firstName, String lastName, String email) {
-        this.id = id;
-        this.userName = userName;
-        this.pwd = pwd;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
     }
 
     public Long getId() {
@@ -173,12 +159,12 @@ public class User implements Serializable {
         this.orderWorkpieces = orderWorkpieces;
     }
 
-    public Role getRole() {
+    public Long getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(Long role) {
         this.role = role;
     }
-
+    
 }
