@@ -14,6 +14,7 @@ import com.storage.api.response.RoleAndPermission.UpdateRoleResponse;
 import com.storage.repositories.entities.Permission;
 import com.storage.repositories.entities.Role;
 import com.storage.repositories.entities.RolePermission;
+import com.storage.repositories.entities.User;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -119,10 +120,23 @@ public class RolesAndPermissionsMapper {
         return rolePermissionsermissions;
     }
     
-    public static DeleteRoleResponse deleteRolePermissionsMapper(long roleId, int numberOfDeletedPermissions){
+    public static DeleteRoleResponse deleteRolePermissionsMapper(long roleId, int numberOfDeletedPermissions, List<User> involvedUsers){
         DeleteRoleResponse response = new DeleteRoleResponse();
         response.setRoleId(roleId);
         response.setNumberOfDeletedPermissions(numberOfDeletedPermissions);
+        Map<Long, String> involedUsersWithIdAndName = new HashMap<>();
+        involvedUsers.forEach((user) -> {
+            involedUsersWithIdAndName.put(user.getId(),createUserName(user));
+        });
+        response.setInvolvedUsers(involedUsersWithIdAndName);
         return response;
+    }
+    
+    private static String createUserName(User user){
+        StringBuilder sb = new StringBuilder();
+        sb.append(user.getFirstName());
+        sb.append(" ");
+        sb.append(user.getLastName());
+        return sb.toString();
     }
 }
