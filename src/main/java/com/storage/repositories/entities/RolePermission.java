@@ -54,6 +54,6 @@ public class RolePermission implements Serializable {
     public void setPermissionId(Long permissionId) {
         this.permissionId = permissionId;
     }
-    
+
     
 }
