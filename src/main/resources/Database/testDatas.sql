@@ -18,6 +18,7 @@ INSERT INTO storage.floors(id, name) VALUES (3, '2');
 INSERT INTO storage.floors(id, name) VALUES (4, '3');
 INSERT INTO storage.floors(id, name) VALUES (5, '4');
 
+INSERT INTO storage.roles(id, role_name) VALUES (0, 'DEFAULT');
 INSERT INTO storage.roles(id, role_name) VALUES (1, 'ADMIN');
 INSERT INTO storage.roles(id, role_name) VALUES (2, 'DESIGNER');
 INSERT INTO storage.roles(id, role_name) VALUES (3, 'STOREKEEPER');
@@ -57,6 +58,9 @@ INSERT INTO storage.permissions(id, permission_name) VALUES (21, 'UPDATE_STORE')
 INSERT INTO storage.permissions(id, permission_name) VALUES (22, 'DELETE_STORE');
 
 
+INSERT INTO storage.roles_permissions(id, permission_id, role_id) VALUES (50, 28, 0);
+INSERT INTO storage.roles_permissions(id, permission_id, role_id) VALUES (51, 27, 0);
+INSERT INTO storage.roles_permissions(id, permission_id, role_id) VALUES (52, 23, 0);
 INSERT INTO storage.roles_permissions(id, permission_id, role_id) VALUES (1, 1, 1);
 INSERT INTO storage.roles_permissions(id, permission_id, role_id) VALUES (2, 2, 1);
 INSERT INTO storage.roles_permissions(id, permission_id, role_id) VALUES (3, 3, 1);
