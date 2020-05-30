@@ -18,13 +18,16 @@ import com.storage.managers.exceptions.RoleNameAlreadyExistsException;
 import com.storage.managers.exceptions.RoleUpdateCreatedException;
 import com.storage.managers.exceptions.RoleUpdateDeleteException;
 import com.storage.managers.interfaces.RolePermissionManager;
+import com.storage.managers.interfaces.UserManager;
 import com.storage.managers.mappers.RolesAndPermissionsMapper;
 import com.storage.repositories.PermissionRepository;
 import com.storage.repositories.RolePermissionRepository;
 import com.storage.repositories.RoleRepository;
+import com.storage.repositories.UserRepository;
 import com.storage.repositories.entities.Permission;
 import com.storage.repositories.entities.Role;
 import com.storage.repositories.entities.RolePermission;
+import com.storage.repositories.entities.User;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -40,12 +43,14 @@ public class RolePermissionManagerImp implements RolePermissionManager {
     RoleRepository roleRepository;
     PermissionRepository permissionRepository;
     RolePermissionRepository rolePermissionRepository;
+    UserManager userManager;
 
     @Autowired
-    public RolePermissionManagerImp(RoleRepository roleRepository, PermissionRepository permissionRepository, RolePermissionRepository rolePermissionRepository) {
+    public RolePermissionManagerImp(RoleRepository roleRepository, PermissionRepository permissionRepository, RolePermissionRepository rolePermissionRepository, UserManager userManager) {
         this.roleRepository = roleRepository;
         this.permissionRepository = permissionRepository;
         this.rolePermissionRepository = rolePermissionRepository;
+        this.userManager = userManager;
     }
 
     @Override
@@ -90,7 +95,7 @@ public class RolePermissionManagerImp implements RolePermissionManager {
 
     @Override
     @Transactional
-    public UpdateRoleResponse updateRolePermissions(long roleId, UpdateRoleRequest updateRoleRequest) throws RoleUpdateDeleteException, RoleUpdateCreatedException{
+    public UpdateRoleResponse updateRolePermissions(long roleId, UpdateRoleRequest updateRoleRequest) throws RoleUpdateDeleteException, RoleUpdateCreatedException {
         List<RolePermission> rolePermissions = rolePermissionRepository.findAllByRoleId(roleId);
         RolePermissionsIdSelecter selector = new RolePermissionsIdSelecter(rolePermissions, updateRoleRequest.getPermissionIds());
         int deletedRows = deletePermissioRelationships(rolePermissions, selector.getDeleteIds());
@@ -130,15 +135,19 @@ public class RolePermissionManagerImp implements RolePermissionManager {
     public DeleteRoleResponse deleteRoleWithPermissions(long roleId) {
         Optional<Role> deleteRole = roleRepository.findById(roleId); //maybe role's permissions mapped to role
         if (!deleteRole.isEmpty()) {
-            List<RolePermission> rolePermissionRelationships = rolePermissionRepository.findAllByRoleId(roleId);
-            int sizeOfList = rolePermissionRelationships.size();
-            if (sizeOfList > 0) {
-                rolePermissionRepository.deleteAll(rolePermissionRelationships);
-            }
-            roleRepository.delete(deleteRole.get());
-            return RolesAndPermissionsMapper.deleteRolePermissionsMapper(roleId, sizeOfList);
+            int deletedRows = rolePermissionRepository.deleteByRoleId(roleId);
+            List<User> usersWithNewId = changedUserIdToDefault(deleteRole.get().getUsers());
+            roleRepository.deleteById(roleId);
+            return RolesAndPermissionsMapper.deleteRolePermissionsMapper(roleId, deletedRows,usersWithNewId);
         } else {
             throw new EntityNotFoundException();
         }
+    }
+
+    private List<User> changedUserIdToDefault(List<User> users) {
+        users.forEach((user) -> {
+            user.setRole(0L);
+        });
+        return userManager.saveAllUsers(users);
     }
 }
