@@ -105,8 +105,7 @@ public class RoleAndPermissionController {
                     .body(LanguageAndDescriptionSelector.languageAndDescriptionSelector(language, ExceptionConstans.ROLE_DOES_NOT_EXISTS));
         } catch (Exception e) {
             logger.error("deleteRoleWithPermissions" + "    " + e.getMessage());
-            return ResponseEntity.status(ExceptionConstans.ROLE_DOES_NOT_EXISTS)
-                    .body(LanguageAndDescriptionSelector.languageAndDescriptionSelector(language, ExceptionConstans.ROLE_DOES_NOT_EXISTS));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ExceptionConstans.DEFAULT_EXCEPTON_MESSAGE);
         }
     }
 
