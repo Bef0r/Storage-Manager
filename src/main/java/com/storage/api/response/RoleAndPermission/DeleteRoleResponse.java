@@ -5,10 +5,13 @@
  */
 package com.storage.api.response.RoleAndPermission;
 
+import java.util.Map;
+
 public class DeleteRoleResponse {
     long roleId;
     int numberOfDeletedPermissions;
-
+    Map<Long,String> involvedUsers;
+    
     public long getRoleId() {
         return roleId;
     }
@@ -23,5 +26,13 @@ public class DeleteRoleResponse {
 
     public void setNumberOfDeletedPermissions(int numberOfDeletedPermissions) {
         this.numberOfDeletedPermissions = numberOfDeletedPermissions;
-    }    
+    }
+
+    public Map<Long, String> getInvolvedUsers() {
+        return involvedUsers;
+    }
+
+    public void setInvolvedUsers(Map<Long, String> involvedUsers) {
+        this.involvedUsers = involvedUsers;
+    }
 }
