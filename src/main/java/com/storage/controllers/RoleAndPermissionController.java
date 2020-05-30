@@ -53,7 +53,7 @@ public class RoleAndPermissionController {
         try {
             return ResponseEntity.ok(rolePermissionManager.getRolePermissions(roleId));
         } catch (EntityNotFoundException entityException) {
-            logger.warn(ExceptionConstans.ROLE_DOES_NOT_EXISTS + "    " + entityException.getMessage());
+            logger.warn(ExceptionConstans.ROLE_DOES_NOT_EXISTS + "    " + ExceptionConstans.ROLE_DOES_NOT_EXISTS);
             return ResponseEntity.status(ExceptionConstans.ROLE_DOES_NOT_EXISTS)
                     .body(LanguageAndDescriptionSelector.languageAndDescriptionSelector(language, ExceptionConstans.ROLE_DOES_NOT_EXISTS));
         } catch (Exception e) {
