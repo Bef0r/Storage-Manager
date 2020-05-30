@@ -5,10 +5,13 @@
  */
 package com.storage.managers.interfaces;
 
+import com.storage.repositories.entities.User;
+import java.util.List;
+
 /**
  *
  * @author Dell
  */
 public interface UserManager {
-    
+    public List<User> saveAllUsers(List<User> users);
 }
