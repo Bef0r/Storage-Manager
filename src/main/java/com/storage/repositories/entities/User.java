@@ -8,7 +8,6 @@ package com.storage.repositories.entities;
 import com.storage.repositories.entities.enums.Languages;
 import com.storage.repositories.entities.enums.Units;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +16,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -57,12 +58,6 @@ public class User implements Serializable {
     
     @Column(name = "dark_mode")
     private Boolean darkMode;
-    
-    @Column(name = "is_active")
-    private Boolean isActive;
-    
-    @Column(name = "inactive_date")
-    private ZonedDateTime  lastInactiveDate;
     
     @OneToMany(mappedBy = "orderUser")
     private List<Workpiece> orderWorkpieces;
@@ -170,22 +165,6 @@ public class User implements Serializable {
 
     public void setRole(Long role) {
         this.role = role;
-    }
-
-    public Boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
-
-    public ZonedDateTime getLastInactiveDate() {
-        return lastInactiveDate;
-    }
-
-    public void setLastInactiveDate(ZonedDateTime lastInactiveDate) {
-        this.lastInactiveDate = lastInactiveDate;
     }
     
 }
