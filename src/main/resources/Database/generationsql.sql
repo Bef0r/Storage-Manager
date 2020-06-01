@@ -92,8 +92,6 @@ CREATE TABLE Storage.users (
   "language" varchar(30),
   "unit" varchar(5),
   "dark_mode" boolean,
-  "is_active" boolean,
-  "inactive_date" TIMESTAMP(6) WITH TIME ZONE
 
 CONSTRAINT Users_PK PRIMARY KEY (id),
 CONSTRAINT Users_Roles_FK FOREIGN KEY (role_id) REFERENCES Storage.roles (id)
